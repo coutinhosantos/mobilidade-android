@@ -1,8 +1,10 @@
 package com.mobilidade.mobilidade;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -27,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         progressBar.setVisibility(View.INVISIBLE);
 
         WebView webView = findViewById(R.id.webview);
-        webView.loadUrl("192.168.1.17:8081");
+        webView.loadUrl("192.168.1.2:8081");
         webView.getSettings().setJavaScriptEnabled(true);
 
         webView.setWebViewClient(new WebViewClient(){
@@ -41,6 +43,18 @@ public class MainActivity extends AppCompatActivity {
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 progressBar.setVisibility(View.INVISIBLE); // esconde a progress
+            }
+        });
+
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                AlertDialog.Builder dialogo= new AlertDialog.Builder(MainActivity.this);
+                dialogo.setTitle("titulo");
+                dialogo.setMessage("texto");
+                dialogo.setNeutralButton("Confirma",null);
+                dialogo.show();
+                finish();
             }
         });
     }
